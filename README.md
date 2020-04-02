@@ -25,7 +25,7 @@ const MyComponent = props => {
 
   return (
     <Mention
-        onChange={v => console.log(v)}
+        onChange={handleChange}
         field="username"
         data={[
             {
