@@ -35,9 +35,6 @@
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   },
-  "dependencies": {
-    "prop-types": "^15.7.2"
-  },
   "browserslist": [
     "last 1 version",
     "> 1%",

@@ -46,12 +46,26 @@ const MyComponent = props => {
 export default MyComponent;
 ```
 
+# Example
+
+![React Textarea Mention](https://i.ibb.co/HHKF7xx/react-mention.png)
+
+
+
 # Props
 
 `symbol`
+
+
 `cssClass`
+
+
 `data`
+
+
 `field`
+
+
 `onChange`
 
 # More Coming Up...

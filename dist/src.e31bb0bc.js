@@ -28592,30 +28592,19 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var Example = function Example(props) {
-  return /*#__PURE__*/_react.default.createElement(_react.Fragment, null, /*#__PURE__*/_react.default.createElement(_Mention.default, {
+  return /*#__PURE__*/_react.default.createElement(_react.Fragment, null, /*#__PURE__*/_react.default.createElement("h1", null, "Welcome to React TextArea Mention "), /*#__PURE__*/_react.default.createElement(_Mention.default, {
     onChange: function onChange(v) {
       return console.log(v);
     },
     data: [{
-      name: "John F",
-      username: "john"
+      name: "John Doe",
+      username: "johndoe"
     }, {
       name: "Jane Good",
-      username: "jane"
+      username: "janekesse"
     }, {
-      name: "Baby Face",
-      username: "babyface"
-    }]
-  }), /*#__PURE__*/_react.default.createElement(_Mention.default, {
-    data: [{
-      name: "John F",
-      username: "john"
-    }, {
-      name: "Jane Good",
-      username: "jane"
-    }, {
-      name: "Baby Face",
-      username: "babyface"
+      name: "Kofi Ghana",
+      username: "kofighana"
     }]
   }));
 };
