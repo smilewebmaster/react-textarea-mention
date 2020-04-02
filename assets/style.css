@@ -1,0 +1,35 @@
+.mention-lookup-nt {
+	width: 500px
+}
+
+.mention-lookup-nt ul {
+	color: #ccc;
+	list-style-type: none;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .2), 0 6px 20px 0 rgba(0, 0, 0, .19);
+	overflow: auto;
+	width: 225px;
+	padding-left: 5px;
+	margin-top: 10px
+}
+
+.mention-lookup-nt li {
+	padding-top: 10px;
+	padding-bottom: 10px
+}
+
+.mention-li-nt div {
+	font: 12px/1.5 Helvetica, Verdana, sans-serif;
+	padding-left: 60px;
+	color: #555
+}
+
+.mention-li-nt img {
+	position: absolute;
+	width: 50px;
+	height: 40px
+}
+
+.mention-li-nt:hover {
+	background: #eee;
+	cursor: pointer
+}
