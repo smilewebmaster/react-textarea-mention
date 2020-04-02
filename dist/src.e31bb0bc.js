@@ -28394,13 +28394,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var Mention = function Mention(_ref) {
   var _ref$symbol = _ref.symbol,
       symbol = _ref$symbol === void 0 ? "@" : _ref$symbol,
-      _ref$styles = _ref.styles,
-      styles = _ref$styles === void 0 ? {} : _ref$styles,
+      cssClass = _ref.cssClass,
       _ref$data = _ref.data,
       data = _ref$data === void 0 ? [] : _ref$data,
       _ref$field = _ref.field,
       field = _ref$field === void 0 ? 'username' : _ref$field,
-      onFieldsChange = _ref.onFieldsChange,
       onChange = _ref.onChange;
   var textAreaRef = (0, _react.useRef)();
 
@@ -28525,7 +28523,6 @@ var Mention = function Mention(_ref) {
     });
     setMentionList(filteredData);
     if (onChange) onChange(textArea.value);
-    if (onFieldsChange) onFieldsChange(textAreaRef.current.value);
   };
 
   var handleKeyUp = function handleKeyUp(e) {
@@ -28556,7 +28553,7 @@ var Mention = function Mention(_ref) {
 
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", {
     id: lookupId,
-    className: "mention-lookup-nt",
+    className: "mention-lookup-nt ".concat(cssClass),
     style: lookupStyles
   }, /*#__PURE__*/_react.default.createElement("ul", null, mentionList.map(function (mention, i) {
     var dataProp = _defineProperty({}, "data-".concat(field), mention[field]);

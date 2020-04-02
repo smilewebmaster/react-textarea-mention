@@ -5,7 +5,7 @@ import "./assets/style.css";
 
 
 
-const Mention = ({ symbol = "@", styles = {}, data = [], field = 'username', onFieldsChange, onChange }) => {
+const Mention = ({ symbol = "@", cssClass, data = [], field = 'username', onChange }) => {
   const textAreaRef = useRef();
   const [id] = useState("mention-" +
   Date.now().toString() +
@@ -101,7 +101,6 @@ const Mention = ({ symbol = "@", styles = {}, data = [], field = 'username', onF
 
     setMentionList(filteredData);
     if (onChange) onChange(textArea.value);
-   if (onFieldsChange) onFieldsChange(textAreaRef.current.value);
   }
 
 
@@ -129,7 +128,7 @@ const Mention = ({ symbol = "@", styles = {}, data = [], field = 'username', onF
 
   return (
     <div>
-      <div id={lookupId} className="mention-lookup-nt" style={lookupStyles}>
+      <div id={lookupId} className={`mention-lookup-nt ${cssClass}`} style={lookupStyles}>
         <ul>
         {mentionList.map((mention, i) => {
           const dataProp = {[`data-${field}`]: mention[field]};
