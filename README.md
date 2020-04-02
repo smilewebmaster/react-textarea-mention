@@ -16,6 +16,7 @@ $ npm install --save react-textarea-mention
 
 ```javascript
 import React from 'react';
+import Mention from 'react-textarea-mention';
 
 const MyComponent = props => {
     const handleChange = content => {
