@@ -22,7 +22,7 @@ const MyComponent = props => {
     const handleChange = content => {
         console.log(content);
     }
-
+ 
   return (
     <Mention
         onChange={handleChange}
