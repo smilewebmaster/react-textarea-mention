@@ -588,6 +588,8 @@ var extractMention = function extractMention(value, startAt) {
 var style = __webpack_require__(1);
 
 // CONCATENATED MODULE: ./Mention.js
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || Mention_unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -614,13 +616,10 @@ var Mention_Mention = function Mention(_ref) {
       data = _ref$data === void 0 ? [] : _ref$data,
       _ref$field = _ref.field,
       field = _ref$field === void 0 ? "username" : _ref$field,
-      textAreaCssClass = _ref.textAreaCssClass,
       onChange = _ref.onChange,
       renderContent = _ref.renderContent,
-      _ref$cols = _ref.cols,
-      cols = _ref$cols === void 0 ? 30 : _ref$cols,
-      _ref$rows = _ref.rows,
-      rows = _ref$rows === void 0 ? 10 : _ref$rows;
+      _ref$textAreaProps = _ref.textAreaProps,
+      textAreaProps = _ref$textAreaProps === void 0 ? {} : _ref$textAreaProps;
   var textAreaRef = Object(external_react_["useRef"])();
 
   var _useState = Object(external_react_["useState"])("mention-" + generate_id()),
@@ -729,15 +728,12 @@ var Mention_Mention = function Mention(_ref) {
         return insertNameIntoInput(e, mention[field]);
       }
     }, renderContent ? renderContent(mention) : /*#__PURE__*/external_react_default.a.createElement("div", null, symbol, mention[field]));
-  }))), /*#__PURE__*/external_react_default.a.createElement("textarea", {
-    className: textAreaCssClass,
+  }))), /*#__PURE__*/external_react_default.a.createElement("textarea", _extends({}, textAreaProps, {
     id: id,
     ref: textAreaRef,
     onKeyUp: handleKeyUp,
-    onClick: hideLookup,
-    cols: cols,
-    rows: rows
-  }));
+    onClick: hideLookup
+  })));
 };
 
 /* harmony default export */ var Mention_0 = (Mention_Mention);

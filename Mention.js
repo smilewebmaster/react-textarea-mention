@@ -9,11 +9,9 @@ const Mention = ({
   cssClass,
   data = [],
   field = "username",
-  textAreaCssClass,
   onChange,
   renderContent,
-  cols = 30,
-  rows = 10
+  textAreaProps = {}
 }) => {
   const textAreaRef = useRef();
   const [id] = useState("mention-" + generateId());
@@ -111,13 +109,11 @@ const Mention = ({
         </ul>
       </div>
       <textarea
-        className={textAreaCssClass}
+        {...textAreaProps}
         id={id}
         ref={textAreaRef}
         onKeyUp={handleKeyUp}
         onClick={hideLookup}
-        cols={cols}
-        rows={rows}
       ></textarea>
     </div>
   );

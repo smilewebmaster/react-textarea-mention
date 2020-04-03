@@ -72,6 +72,9 @@ export default MyComponent;
 
 `renderContent`
 
+
+`textAreaProps`
+
 # More Coming Up...
 
 ### Pull Requests
