@@ -618,6 +618,7 @@ var Mention_Mention = function Mention(_ref) {
       field = _ref$field === void 0 ? "username" : _ref$field,
       onChange = _ref.onChange,
       renderContent = _ref.renderContent,
+      onMentionChange = _ref.onMentionChange,
       _ref$textAreaProps = _ref.textAreaProps,
       textAreaProps = _ref$textAreaProps === void 0 ? {} : _ref$textAreaProps;
   var textAreaRef = Object(external_react_["useRef"])();
@@ -683,6 +684,7 @@ var Mention_Mention = function Mention(_ref) {
   var updateMentionList = function updateMentionList() {
     var textArea = textAreaRef.current;
     var mention = extract_mention(textArea.value, startAt);
+    if (onMentionChange) onMentionChange(mention);
     var filteredData = data.filter(function (d) {
       return d[field].toLowerCase().includes(mention);
     });
