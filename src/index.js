@@ -7,7 +7,7 @@ const Example = props => {
       <Fragment>
         <h1>Welcome to React TextArea Mention </h1>
  <Mention
-    onChange={v => console.log(v)}
+    onMentionChange={v => console.log(v)}
       data={[
         {
           name: "John Doe",

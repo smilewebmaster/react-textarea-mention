@@ -11,6 +11,7 @@ const Mention = ({
   field = "username",
   onChange,
   renderContent,
+  onMentionChange,
   textAreaProps = {}
 }) => {
   const textAreaRef = useRef();
@@ -49,6 +50,7 @@ const Mention = ({
   const updateMentionList = () => {
     const textArea = textAreaRef.current;
     const mention = extractMention(textArea.value, startAt);
+    if (onMentionChange) onMentionChange(mention);
 
     const filteredData = data.filter(d =>
       d[field].toLowerCase().includes(mention)

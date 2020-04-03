@@ -2,3 +2,4 @@ node_modules
 example
 .cache
 package-lock.json
+mention-script.js
