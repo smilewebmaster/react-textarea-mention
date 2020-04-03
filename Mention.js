@@ -54,7 +54,7 @@ const Mention = ({
     const mention = extractMention(textArea.value, startAt);
 
     if (requestFunc) {
-      requestFunc.then(data => {
+      requestFunc(mention).then(data => {
         setMentionList(data);
       });
     } else {
