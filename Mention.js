@@ -10,9 +10,11 @@ const Mention = ({
   data = [],
   field = "username",
   onChange,
+  limit = 5,
+  requestFunc,
   renderContent,
   onMentionChange,
-  textAreaProps = {}
+  textAreaProps = {},
 }) => {
   const textAreaRef = useRef();
   const [id] = useState("mention-" + generateId());
@@ -50,17 +52,23 @@ const Mention = ({
   const updateMentionList = () => {
     const textArea = textAreaRef.current;
     const mention = extractMention(textArea.value, startAt);
+
+    if (requestFunc) {
+      requestFunc.then(data => {
+        setMentionList(data);
+      });
+    } else {
+      const filteredData = data
+        .filter((d) => d[field].toLowerCase().includes(mention))
+        .slice(0, limit);
+        setMentionList(filteredData);
+    }
+
     if (onMentionChange) onMentionChange(mention);
-
-    const filteredData = data.filter(d =>
-      d[field].toLowerCase().includes(mention)
-    );
-
-    setMentionList(filteredData);
     if (onChange) onChange(textArea.value);
   };
 
-  const handleKeyUp = e => {
+  const handleKeyUp = (e) => {
     const { value, selectionStart: start } = e.target;
     const character = value.substring(start - 1, start);
     if (onChange) onChange(value);
@@ -95,7 +103,7 @@ const Mention = ({
               <li
                 key={i}
                 className={peopleClass}
-                onClick={e => insertNameIntoInput(e, mention[field])}
+                onClick={(e) => insertNameIntoInput(e, mention[field])}
               >
                 {renderContent ? (
                   renderContent(mention)

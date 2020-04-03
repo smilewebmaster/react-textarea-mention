@@ -617,6 +617,9 @@ var Mention_Mention = function Mention(_ref) {
       _ref$field = _ref.field,
       field = _ref$field === void 0 ? "username" : _ref$field,
       onChange = _ref.onChange,
+      _ref$limit = _ref.limit,
+      limit = _ref$limit === void 0 ? 5 : _ref$limit,
+      requestFunc = _ref.requestFunc,
       renderContent = _ref.renderContent,
       onMentionChange = _ref.onMentionChange,
       _ref$textAreaProps = _ref.textAreaProps,
@@ -684,11 +687,19 @@ var Mention_Mention = function Mention(_ref) {
   var updateMentionList = function updateMentionList() {
     var textArea = textAreaRef.current;
     var mention = extract_mention(textArea.value, startAt);
+
+    if (requestFunc) {
+      requestFunc.then(function (data) {
+        setMentionList(data);
+      });
+    } else {
+      var filteredData = data.filter(function (d) {
+        return d[field].toLowerCase().includes(mention);
+      }).slice(0, limit);
+      setMentionList(filteredData);
+    }
+
     if (onMentionChange) onMentionChange(mention);
-    var filteredData = data.filter(function (d) {
-      return d[field].toLowerCase().includes(mention);
-    });
-    setMentionList(filteredData);
     if (onChange) onChange(textArea.value);
   };
 
