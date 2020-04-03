@@ -69,6 +69,9 @@ export default MyComponent;
 
 `onChange`
 
+
+`renderContent`
+
 # More Coming Up...
 
 ### Pull Requests

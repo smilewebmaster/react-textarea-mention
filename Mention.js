@@ -1,155 +1,125 @@
-import React, { useState, useRef, Fragment } from "react";
+import React, { useState, useRef } from "react";
+import GetCoords from "./misc/getcoords";
+import extractMention from "./misc/extract-mention";
+import generateId from "./misc/generate-id";
 import "./assets/style.css";
 
-
-
-
-
-const Mention = ({ symbol = "@", cssClass, data = [], field = 'username', onChange }) => {
+const Mention = ({
+  symbol = "@",
+  cssClass,
+  data = [],
+  field = "username",
+  textAreaCssClass,
+  onChange,
+  renderContent,
+  cols = 30,
+  rows = 10
+}) => {
   const textAreaRef = useRef();
-  const [id] = useState("mention-" +
-  Date.now().toString() +
-  Math.random()
-    .toString(36)
-    .slice(-8))
-  const [lookupId] = useState("lookup-" +  Date.now().toString() +
-  Math.random()
-    .toString(36)
-    .slice(-8));
+  const [id] = useState("mention-" + generateId());
+  const [lookupId] = useState("lookup-" + generateId());
 
   const [startAt, setStartAt] = useState(-1);
   const [mentionSize, setMentionSize] = useState(0);
   const [mentionList, setMentionList] = useState([]);
   const [lookupStyles, setLookupStyles] = useState({});
 
-
-
-
-
   const peopleClass = "mention-li-nt";
 
-  const GetCoords = () => {
-    let replica = document.createElement('div');
-    const textArea = textAreaRef.current;
-      const copyStyle = getComputedStyle(textArea);
-      for (const prop of copyStyle) {
-        replica.style[prop] = copyStyle[prop];
-      }
-      replica.style.height = 'auto';
-      replica.style.width = 'auto';
-      let span = document.createElement('span');
-      replica.appendChild(span);
-      let content = textArea.value.substr(0, textArea.selectionStart);
-      let contentLines = content.split(/[\n\r]/g);
-      let currentline = content.substr(0, content.selectionStart).split(/[\n\r]/g)
-        .length;
-      let replicaContent = '';
-      contentLines.map((l, i) => {
-        if (i === currentline - 1 && i < contentLines.length) {
-          replicaContent += contentLines[i];
-          return;
-        }
-        replicaContent += '\n';
-      });
-      span.innerHTML = replicaContent.replace(/\n$/, '\n');
-      document.body.appendChild(replica);
-      const { offsetWidth: spanWidth, offsetHeight: spanHeight } = span;
-      document.body.removeChild(replica);
-      return {
-        x: spanWidth + textArea.offsetLeft,
-        y: spanHeight + textArea.offsetTop,
-      };
-  }
-
   const setupLookup = () => {
-      let {x, y} = GetCoords(textAreaRef.current);
-      setLookupStyles({position: 'absolute', left: `${x}px`, top: `${y}px`});
-  }
+    let { x, y } = GetCoords(textAreaRef.current);
+    setLookupStyles({ position: "absolute", left: `${x}px`, top: `${y}px` });
+  };
 
-  const hideLookup = () =>  setMentionList([]);
+  const hideLookup = () => setMentionList([]);
 
-  const extractMention = value => {
-    let mention = value.substring(startAt, value.length);
-    const whiteSpaceIndex = mention.indexOf(" "),
-        endAt = whiteSpaceIndex > -1 ? whiteSpaceIndex : value.length;
-      mention = mention.substring(0, endAt);
-      return mention.toLowerCase();
-  }
-
-  const insertNameIntoInput = e => {
+  const insertNameIntoInput = (e, dataField) => {
     const textArea = textAreaRef.current;
-    let element = e.target.className === peopleClass ? e.target : e.target.parentElement;
     const first = textArea.value.substr(0, startAt);
     const last = textArea.value.substr(
       startAt + mentionSize,
       textArea.value.length
     );
-    const content = `${first}${element.dataset[field]}${last}`;
+    const content = `${first}${dataField}${last}`;
     textArea.value = content;
-    setMentionSize(element.dataset[field].length);
+    setMentionSize(dataField.length);
     textArea.focus();
     if (onChange) onChange(textArea.value);
     hideLookup();
-  }
-
+  };
 
   const updateMentionList = () => {
     const textArea = textAreaRef.current;
-    const mention = extractMention(textArea.value);
+    const mention = extractMention(textArea.value, startAt);
 
-    const filteredData = data.filter(d => d[field].toLowerCase().includes(mention));
+    const filteredData = data.filter(d =>
+      d[field].toLowerCase().includes(mention)
+    );
 
     setMentionList(filteredData);
     if (onChange) onChange(textArea.value);
-  }
-
+  };
 
   const handleKeyUp = e => {
-        const {value, selectionStart: start} = e.target;
-        const character = value.substring(start - 1, start);
-        if (onChange) onChange(value)
+    const { value, selectionStart: start } = e.target;
+    const character = value.substring(start - 1, start);
+    if (onChange) onChange(value);
 
-      if (character === symbol) {
-        setStartAt(start);
-        setupLookup();
-        return;
-      }
-      if (character === " " || value.trim() === "") {
-        setStartAt(-1);
-        hideLookup();
-        return;
-      }
-      if (startAt > -1) {
-        updateMentionList();
-        setMentionSize(mentionSize + 1);
-        return;
-      }
-  }
+    if (character === symbol) {
+      setStartAt(start);
+      setupLookup();
+      return;
+    }
+    if (character === " " || value.trim() === "") {
+      setStartAt(-1);
+      hideLookup();
+      return;
+    }
+    if (startAt > -1) {
+      updateMentionList();
+      setMentionSize(mentionSize + 1);
+      return;
+    }
+  };
 
   return (
     <div>
-      <div id={lookupId} className={`mention-lookup-nt ${cssClass}`} style={lookupStyles}>
+      <div
+        id={lookupId}
+        className={`mention-lookup-nt ${cssClass}`}
+        style={lookupStyles}
+      >
         <ul>
-        {mentionList.map((mention, i) => {
-          const dataProp = {[`data-${field}`]: mention[field]};
-          return (
-            <li key={i} className={peopleClass} {...dataProp} onClick={insertNameIntoInput}>
-                <div>{symbol}{mention[field]}</div>
-            </li>
-          )
-        })}
+          {mentionList.map((mention, i) => {
+            return (
+              <li
+                key={i}
+                className={peopleClass}
+                onClick={e => insertNameIntoInput(e, mention[field])}
+              >
+                {renderContent ? (
+                  renderContent(mention)
+                ) : (
+                  <div>
+                    {symbol}
+                    {mention[field]}
+                  </div>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </div>
-       <textarea
-      id={id}
-      ref={textAreaRef}
-      onKeyUp={handleKeyUp}
-      onClick={hideLookup}
-      cols="30"
-      rows="10"
-    ></textarea>
+      <textarea
+        className={textAreaCssClass}
+        id={id}
+        ref={textAreaRef}
+        onKeyUp={handleKeyUp}
+        onClick={hideLookup}
+        cols={cols}
+        rows={rows}
+      ></textarea>
     </div>
-   
   );
 };
 export default Mention;
