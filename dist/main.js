@@ -558,14 +558,14 @@ var GetCoords = function GetCoords(textArea) {
 
     replicaContent += "\n";
   });
-  span.innerHTML = replicaContent.replace(/\n$/, "\n");
+  span.innerHTML = replicaContent.replace(/\n$/, "\n^A");
   document.body.appendChild(replica);
   var spanWidth = span.offsetWidth,
       spanHeight = span.offsetHeight;
   document.body.removeChild(replica);
   return {
-    x: spanWidth + textArea.offsetLeft,
-    y: spanHeight + textArea.offsetTop
+    x: (spanWidth > textArea.offsetWidth ? textArea.offsetWidth : spanWidth) + textArea.offsetLeft,
+    y: (spanHeight > textArea.offsetHeight ? textArea.offsetHeight : spanHeight) + textArea.offsetTop
   };
 };
 
@@ -690,7 +690,9 @@ var Mention_Mention = function Mention(_ref) {
 
     if (requestFunc) {
       requestFunc(mention).then(function (data) {
-        setMentionList(data);
+        if (data) setMentionList(data);
+      }).catch(function (err) {
+        return console.error(err);
       });
     } else {
       var filteredData = data.filter(function (d) {
@@ -743,6 +745,7 @@ var Mention_Mention = function Mention(_ref) {
     }, renderContent ? renderContent(mention) : /*#__PURE__*/external_react_default.a.createElement("div", null, symbol, mention[field]));
   }))), /*#__PURE__*/external_react_default.a.createElement("textarea", _extends({}, textAreaProps, {
     id: id,
+    wrap: "off",
     ref: textAreaRef,
     onKeyUp: handleKeyUp,
     onClick: hideLookup
