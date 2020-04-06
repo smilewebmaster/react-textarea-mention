@@ -689,7 +689,7 @@ var Mention_Mention = function Mention(_ref) {
     var mention = extract_mention(textArea.value, startAt);
 
     if (requestFunc) {
-      requestFunc.then(function (data) {
+      requestFunc(mention).then(function (data) {
         setMentionList(data);
       });
     } else {

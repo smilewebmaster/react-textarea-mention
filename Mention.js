@@ -55,8 +55,9 @@ const Mention = ({
 
     if (requestFunc) {
       requestFunc(mention).then(data => {
-        setMentionList(data);
-      });
+        if (data)
+          setMentionList(data);
+      }).catch(err => console.error(err));
     } else {
       const filteredData = data
         .filter((d) => d[field].toLowerCase().includes(mention))
@@ -121,6 +122,7 @@ const Mention = ({
       <textarea
         {...textAreaProps}
         id={id}
+        wrap='off'
         ref={textAreaRef}
         onKeyUp={handleKeyUp}
         onClick={hideLookup}

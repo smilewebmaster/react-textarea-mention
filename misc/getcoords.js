@@ -20,13 +20,13 @@ const GetCoords = textArea => {
     }
     replicaContent += "\n";
   });
-  span.innerHTML = replicaContent.replace(/\n$/, "\n");
+  span.innerHTML = replicaContent.replace(/\n$/, "\n^A");
   document.body.appendChild(replica);
   const { offsetWidth: spanWidth, offsetHeight: spanHeight } = span;
   document.body.removeChild(replica);
   return {
-    x: spanWidth + textArea.offsetLeft,
-    y: spanHeight + textArea.offsetTop
+    x: (spanWidth > textArea.offsetWidth ? textArea.offsetWidth : spanWidth) + textArea.offsetLeft,
+    y: (spanHeight > textArea.offsetHeight ? textArea.offsetHeight: spanHeight) + textArea.offsetTop
   };
 };
 
